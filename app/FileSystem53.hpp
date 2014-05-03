@@ -21,6 +21,7 @@ class FileSystem53 {
 	int L;  // Number of Block
 	int K;  // Number of blocks for descriptor table
 
+	int number_of_files_in_ldisk;
 	int cp;
 
 	

@@ -14,6 +14,7 @@ FileSystem53::FileSystem53(int l, int b, string storage)
 	K = 7; // Number of blocks for descriptor table
 	
 	cp = 0; // current position;
+	number_of_files_in_ldisk = 0; // number of files in ldisk
 	pLdisk = new char*[B];
 	
 	// Initialize 2d array dynamically
@@ -74,27 +75,27 @@ void FileSystem53::format() {
 		}
 	}
 	// ERR
-	pLdisk[2][1] = 21;
-	pLdisk[21][0] = 'A';
-	pLdisk[21][1] = 'B';
-	pLdisk[21][2] = 'C';
-	pLdisk[21][3] = 'D';
-	pLdisk[21][4] = 3;
-	pLdisk[21][5] = 'E';
-	pLdisk[21][6] = 'F';
+	// pLdisk[2][1] = 21;
+	// pLdisk[21][0] = 'A';
+	// pLdisk[21][1] = 'B';
+	// pLdisk[21][2] = 'C';
+	// pLdisk[21][3] = 'D';
+	// pLdisk[21][4] = 3;
+	// pLdisk[21][5] = 'E';
+	// pLdisk[21][6] = 'F';
 
 
-	pLdisk[1][1] = 21;
+	// pLdisk[1][1] = 21;
 
-	pDesc_table[2][0] = 'A'; // 0st
-	pDesc_table[2][4] = 'B'; // 1nd
-	pDesc_table[2][8] = 'C'; // 2rd
-	pDesc_table[2][12] = 'D'; // 3rd
-	pDesc_table[2][16] = 'E'; // 4th
-	pDesc_table[2][20] = 'F'; // 5th
-	pDesc_table[2][24] = 'G'; // 6th
-	pDesc_table[2][28] = 'H'; // 7th
-	pDesc_table[2][32] = 'I'; // 8th
+	// pDesc_table[2][0] = 'A'; // 0st
+	// pDesc_table[2][4] = 'B'; // 1nd
+	// pDesc_table[2][8] = 'C'; // 2rd
+	// pDesc_table[2][12] = 'D'; // 3rd
+	// pDesc_table[2][16] = 'E'; // 4th
+	// pDesc_table[2][20] = 'F'; // 5th
+	// pDesc_table[2][24] = 'G'; // 6th
+	// pDesc_table[2][28] = 'H'; // 7th
+	// pDesc_table[2][32] = 'I'; // 8th
 	//cout << "pLdisk[2][1] : " <<pLdisk[2][1];
 	//pLdisk[7][0] = '';
 
@@ -107,7 +108,7 @@ char* FileSystem53::read_descriptor(int no) {
 	unsigned int blockNumber = ((no * DESCR_SIZE) / 16) + 2;
 	unsigned int locationOnBlock = (no * DESCR_SIZE) % 16;
 
-	cout << "RowNumber : " << blockNumber << endl;
+	cout << "\nRowNumber : " << blockNumber << endl;
 	cout << "ColumnNumber : " << locationOnBlock << endl;
 	
 	return pDesc_table[blockNumber]+locationOnBlock;
@@ -147,6 +148,10 @@ void FileSystem53::write_descriptor(int no, char* desc) {
 	pLdisk[0][no] = 1; // File Descriptor
 	pLdisk[1][no] = 1; // Data Region
 	// 3. Write back to disk
+	// int firstEmptyDataBlock = find_empty_data_block();
+	// while(desc[i] != 3) {
+	// 	pLdisk[]
+	// }
 
 }
 
@@ -157,7 +162,7 @@ int FileSystem53::find_empty_descriptor(){
 
 	for(int i = 2; i < K; i++) {
 		//cout << "Loop: " << i << endl;	
-		for(int j = 0; j < B; j+=DESCR_SIZE) {
+		for(int j = 4; j < B; j+=DESCR_SIZE) {
 			//cout << "Inner Loop: " << j << endl;
 			//cout << "pDesc_table " << i << " : " << j << " = " << pDesc_table[i][j] << endl; 	
 			if(pDesc_table[i][j] == 0) {	
@@ -189,15 +194,15 @@ int FileSystem53::create(string str) {
 	int lastOccupiedPlace = -1;
 	int firstEmptyDataBlock = -1;
 	char* pBuffer = new char[64];
-	// if iNode bitmap is not empty, search directory
 	
 	for(int i = 1; i < MAX_FILE_NO+1; i++) {
-		if(pDesc_table[0][i] == 0) 
+		if(pDesc_table[0][i] == 0)  // If iNode bitmap is empty
 			break;
-		if (MAX_FILE_NO == i)
+		if (MAX_FILE_NO == i) // If disk is full
 			return -1;
 	}
 
+	// Check Duplication
 	char* pDirectory = pDesc_table[1]+0; // root
 	for(int i = 1; i < DESCR_SIZE; i++) {
 		if(pDirectory[i] != 0) {
@@ -213,20 +218,39 @@ int FileSystem53::create(string str) {
 			}
 			else {
 				cout << "Different";
-				firstEmptyDataBlock = find_empty_data_block();
+				// CONS firstEmptyDataBlock = find_empty_data_block();
 			}
 		} else {
-			firstEmptyDataBlock = find_empty_data_block();
-			break; 
+			cout << "NO DUPLICATION\n";
+			// CONS firstEmptyDataBlock = find_empty_data_block();
+			//break; 
 		}
 	}
 
+	//tring fileNameWithDescriptorIndex = "";
+	// BUG
 	int firstFreeDescriptor = find_empty_descriptor();
+	char char_firstFreeDescriptor = firstFreeDescriptor;
+
+	//cout << "SSSS :" << char_firstFreeDescriptor << endl;
 	
-	// 1: creates empty file with file size zero
+	const char* pFileName = str.c_str();	
+	for(int i = 0;i < str.length();i++) {
+		pLdisk[K][i] = pFileName[i];
 		
+		if(i+1 == str.length()) {
+			pLdisk[K][i+1] = 3;
+			pLdisk[K][i+2] = firstFreeDescriptor;
+			pLdisk[K][i+3] = 10;
+			number_of_files_in_ldisk+=1;
+		}
+	}
 
+	pDesc_table[2][0] = number_of_files_in_ldisk;
 
+	
+	//write_descriptor(firstFreeDescriptor);
+	// 1: creates empty file with file size zero
 	// 2: makes/allocates descriptor
 	// 3: updates directory file
 

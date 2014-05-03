@@ -23,10 +23,12 @@ int main()
 
     fileSystem->format();
     cout << fileSystem->create("foo");
-
+    cout << fileSystem->create("boo");
+    //cout << " find empty descriptor : " << fileSystem->find_empty_descriptor();
+    cout << "Directory pointer : " << *fileSystem->read_descriptor(0) << endl;
     //fileSystem->versionInfo();
 
-    //fileSystem->save();
+    fileSystem->save();
 
     //cout << fileSystem->create("hi");
 
