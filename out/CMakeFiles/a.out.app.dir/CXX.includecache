@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ics46/projects/FileSystem/app/FileSystem53.cpp
+fstream
+-
+string
+-
+FileSystem53.hpp
+/home/ics46/projects/FileSystem/app/FileSystem53.hpp
+
+/home/ics46/projects/FileSystem/app/FileSystem53.hpp
+iostream
+-
+string
+-
+

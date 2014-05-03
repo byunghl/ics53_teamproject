@@ -1,0 +1,83 @@
+
+// ICS53 Project1 Main
+// Author: Byung Ho Lee
+
+#include "FileSystem53.hpp"
+
+int main()
+{
+    
+    FileSystem53* fileSystem = new FileSystem53(64,64,"Testing");
+
+    // char arr[] = {'q', 'w', 'e', 'r'};
+    // fileSystem->write_descriptor(2, arr);
+
+    // //std::cout << "Read_Descriptor : " << *fileSystem->read_descriptor(2) << std::endl;
+    // for(int i = 0; i < 4 ; i ++) {
+    //     std::cout << *(fileSystem->read_descriptor(2)+i) << std::endl;
+    // }
+
+    // std::cout << "Empty :" << fileSystem->find_empty_descriptor() << std::endl;
+
+    ///// ROOT DIRECTORY
+
+    fileSystem->format();
+    cout << fileSystem->create("foo");
+
+    //fileSystem->versionInfo();
+
+    //fileSystem->save();
+
+    //cout << fileSystem->create("hi");
+
+    ///////////
+
+    // //std::cout <<  fileSystem->find_empty_descriptor() << std::endl;
+    // std::cout << "Read_Descriptor : " << *fileSystem->read_descriptor(2) << std::endl;
+    // fileSystem->clear_descriptor(2);
+    // std::cout << "Read_Descriptor : " << *fileSystem->read_descriptor(2) << std::endl;
+    // for(int i = 0; i < 4 +1; i ++) {
+    //     std::cout << *(fileSystem->read_descriptor(2)+i) << std::endl;
+    // }
+    // Below comments are for testing purpose
+    //fileSystem->versionInfo();
+    // fileSystem->save();
+    // fileSystem->restore();
+
+    // char* pTemp = new char[64];
+    // for(int i = 0; i < 64; i++) {
+    // 	pTemp[i] = 'Z';
+    // }
+
+    // // char x = 'X';
+    // // char* pX = &x;
+
+    // fileSystem->read_block(1, pTemp);
+    // fileSystem->read_block(2, pTemp);
+
+    // pTemp = new char[64];
+    // for(int i = 0; i < 64; i++) {
+    //     pTemp[i] = 'Z';
+    // }
+    // fileSystem->write_block(1, pTemp);
+    // fileSystem->write_block(2, pTemp);
+
+    // fileSystem->read_block(1, pTemp);
+    // fileSystem->read_block(2, pTemp);
+
+    // cout << pTemp[0];
+    // cout << pTemp[1];
+    // cout << pTemp[2];
+
+    // string command;
+
+    // do {
+    // 	cout << "$ ";
+    // 	getline(std::cin, command);
+    // }while(command!="quit");
+
+    delete fileSystem;
+
+    return 0;
+}
+
