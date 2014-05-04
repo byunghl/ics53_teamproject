@@ -1,6 +1,8 @@
 FILE(REMOVE_RECURSE
+  "CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o"
   "CMakeFiles/a.out.app.dir/app/main.cpp.o"
   "CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o"
+  "CMakeFiles/a.out.app.dir/app/OFT.cpp.o"
   "CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o"
   "bin/a.out.app.pdb"
   "bin/a.out.app"

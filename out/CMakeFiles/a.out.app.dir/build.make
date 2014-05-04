@@ -49,9 +49,32 @@ include CMakeFiles/a.out.app.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/a.out.app.dir/flags.make
 
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o: CMakeFiles/a.out.app.dir/flags.make
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o: ../app/FileInfo.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o"
+	/usr/local/clang-3.4/bin/clang++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o -c /home/ics46/projects/FileSystem/app/FileInfo.cpp
+
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/a.out.app.dir/app/FileInfo.cpp.i"
+	/usr/local/clang-3.4/bin/clang++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/ics46/projects/FileSystem/app/FileInfo.cpp > CMakeFiles/a.out.app.dir/app/FileInfo.cpp.i
+
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/a.out.app.dir/app/FileInfo.cpp.s"
+	/usr/local/clang-3.4/bin/clang++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/ics46/projects/FileSystem/app/FileInfo.cpp -o CMakeFiles/a.out.app.dir/app/FileInfo.cpp.s
+
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.requires:
+.PHONY : CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.requires
+
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.provides: CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.requires
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.provides.build
+.PHONY : CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.provides
+
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.provides.build: CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o
+
 CMakeFiles/a.out.app.dir/app/main.cpp.o: CMakeFiles/a.out.app.dir/flags.make
 CMakeFiles/a.out.app.dir/app/main.cpp.o: ../app/main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/a.out.app.dir/app/main.cpp.o"
 	/usr/local/clang-3.4/bin/clang++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/a.out.app.dir/app/main.cpp.o -c /home/ics46/projects/FileSystem/app/main.cpp
 
@@ -74,7 +97,7 @@ CMakeFiles/a.out.app.dir/app/main.cpp.o.provides.build: CMakeFiles/a.out.app.dir
 
 CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o: CMakeFiles/a.out.app.dir/flags.make
 CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o: ../app/CreateCommand.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o"
 	/usr/local/clang-3.4/bin/clang++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o -c /home/ics46/projects/FileSystem/app/CreateCommand.cpp
 
@@ -95,9 +118,32 @@ CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o.provides: CMakeFiles/a.out.app.
 
 CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o.provides.build: CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o
 
+CMakeFiles/a.out.app.dir/app/OFT.cpp.o: CMakeFiles/a.out.app.dir/flags.make
+CMakeFiles/a.out.app.dir/app/OFT.cpp.o: ../app/OFT.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_4)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/a.out.app.dir/app/OFT.cpp.o"
+	/usr/local/clang-3.4/bin/clang++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/a.out.app.dir/app/OFT.cpp.o -c /home/ics46/projects/FileSystem/app/OFT.cpp
+
+CMakeFiles/a.out.app.dir/app/OFT.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/a.out.app.dir/app/OFT.cpp.i"
+	/usr/local/clang-3.4/bin/clang++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/ics46/projects/FileSystem/app/OFT.cpp > CMakeFiles/a.out.app.dir/app/OFT.cpp.i
+
+CMakeFiles/a.out.app.dir/app/OFT.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/a.out.app.dir/app/OFT.cpp.s"
+	/usr/local/clang-3.4/bin/clang++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/ics46/projects/FileSystem/app/OFT.cpp -o CMakeFiles/a.out.app.dir/app/OFT.cpp.s
+
+CMakeFiles/a.out.app.dir/app/OFT.cpp.o.requires:
+.PHONY : CMakeFiles/a.out.app.dir/app/OFT.cpp.o.requires
+
+CMakeFiles/a.out.app.dir/app/OFT.cpp.o.provides: CMakeFiles/a.out.app.dir/app/OFT.cpp.o.requires
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/OFT.cpp.o.provides.build
+.PHONY : CMakeFiles/a.out.app.dir/app/OFT.cpp.o.provides
+
+CMakeFiles/a.out.app.dir/app/OFT.cpp.o.provides.build: CMakeFiles/a.out.app.dir/app/OFT.cpp.o
+
 CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o: CMakeFiles/a.out.app.dir/flags.make
 CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o: ../app/FileSystem53.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ics46/projects/FileSystem/out/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o"
 	/usr/local/clang-3.4/bin/clang++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o -c /home/ics46/projects/FileSystem/app/FileSystem53.cpp
 
@@ -120,15 +166,19 @@ CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o.provides.build: CMakeFiles/a.out
 
 # Object files for target a.out.app
 a_out_app_OBJECTS = \
+"CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o" \
 "CMakeFiles/a.out.app.dir/app/main.cpp.o" \
 "CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o" \
+"CMakeFiles/a.out.app.dir/app/OFT.cpp.o" \
 "CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o"
 
 # External object files for target a.out.app
 a_out_app_EXTERNAL_OBJECTS =
 
+bin/a.out.app: CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o
 bin/a.out.app: CMakeFiles/a.out.app.dir/app/main.cpp.o
 bin/a.out.app: CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o
+bin/a.out.app: CMakeFiles/a.out.app.dir/app/OFT.cpp.o
 bin/a.out.app: CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o
 bin/a.out.app: CMakeFiles/a.out.app.dir/build.make
 bin/a.out.app: CMakeFiles/a.out.app.dir/link.txt
@@ -139,8 +189,10 @@ bin/a.out.app: CMakeFiles/a.out.app.dir/link.txt
 CMakeFiles/a.out.app.dir/build: bin/a.out.app
 .PHONY : CMakeFiles/a.out.app.dir/build
 
+CMakeFiles/a.out.app.dir/requires: CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o.requires
 CMakeFiles/a.out.app.dir/requires: CMakeFiles/a.out.app.dir/app/main.cpp.o.requires
 CMakeFiles/a.out.app.dir/requires: CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o.requires
+CMakeFiles/a.out.app.dir/requires: CMakeFiles/a.out.app.dir/app/OFT.cpp.o.requires
 CMakeFiles/a.out.app.dir/requires: CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o.requires
 .PHONY : CMakeFiles/a.out.app.dir/requires
 

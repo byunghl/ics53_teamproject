@@ -11,7 +11,9 @@
 
 #include <iostream>
 #include <string>
-//#include "Block.hpp"
+#include <sstream>
+#include "OFT.hpp"
+
 
 using namespace std;
 
@@ -24,7 +26,8 @@ class FileSystem53 {
 	int number_of_files_in_ldisk;
 	int cp;
 
-	
+	OpenFileTable oft[64];
+
 	char** pLdisk;
 	char** pDesc_table;  // Descriptor Table (in memory).
     // This is aka cache. It's contents should be
@@ -229,7 +232,7 @@ class FileSystem53 {
 	// 		//    Return -2 if all entry are occupied.
 	// 		// 5. Initialize the entry (descriptor number, current position, etc.)
 	// 		// 6. Return entry number
-	// int open(string symbolic_file_name);
+	int open(string symbolic_file_name);
 
 
 	// /* File Read function:
@@ -274,7 +277,7 @@ class FileSystem53 {
 	//  *    -1 value for error case "File hasn't been open"
 	//  *    -2 for error case "Maximum file size reached" (not implemented.)
 	//  */
-	// int write(int index, char value, int count);
+	int write(int index, char value, int count);
 
 
 	// /* Setting new read/write position function:
@@ -317,7 +320,7 @@ class FileSystem53 {
 	//  * Return:
 	//  *    None
 	//  */
-	// void directory();
+	void directory();
 
 	// Copies 1 block from block number i in ldisk to memory at address p.
 	void read_block(int i, char* p);
@@ -340,7 +343,14 @@ class FileSystem53 {
 	// Personal functions
 	int find_empty_data_block();
 
+	void empty_data_block(int index);
+
 	void checkFileNumber();
+
+	
+	string* fileNameParser(string str);
+
+	int* fileSizeParser(string str, char* buffer);
 
 	// NEED TO WORK void markBitmap(int no, bool bit);
 	void versionInfo(); // PERSONAL FUNCTION

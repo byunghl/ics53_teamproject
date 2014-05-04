@@ -4,9 +4,17 @@
 CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o: ../app/Command.hpp
 CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o: ../app/CreateCommand.cpp
 
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o: ../app/FileInfo.cpp
+CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o: ../app/FileInfo.hpp
+
 CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o: ../app/FileSystem53.cpp
 CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o: ../app/FileSystem53.hpp
+CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o: ../app/OFT.hpp
+
+CMakeFiles/a.out.app.dir/app/OFT.cpp.o: ../app/OFT.cpp
+CMakeFiles/a.out.app.dir/app/OFT.cpp.o: ../app/OFT.hpp
 
 CMakeFiles/a.out.app.dir/app/main.cpp.o: ../app/FileSystem53.hpp
+CMakeFiles/a.out.app.dir/app/main.cpp.o: ../app/OFT.hpp
 CMakeFiles/a.out.app.dir/app/main.cpp.o: ../app/main.cpp
 

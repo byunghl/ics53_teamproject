@@ -5,7 +5,9 @@ SET(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/ics46/projects/FileSystem/app/CreateCommand.cpp" "/home/ics46/projects/FileSystem/out/CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.o"
+  "/home/ics46/projects/FileSystem/app/FileInfo.cpp" "/home/ics46/projects/FileSystem/out/CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o"
   "/home/ics46/projects/FileSystem/app/FileSystem53.cpp" "/home/ics46/projects/FileSystem/out/CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.o"
+  "/home/ics46/projects/FileSystem/app/OFT.cpp" "/home/ics46/projects/FileSystem/out/CMakeFiles/a.out.app.dir/app/OFT.cpp.o"
   "/home/ics46/projects/FileSystem/app/main.cpp" "/home/ics46/projects/FileSystem/out/CMakeFiles/a.out.app.dir/app/main.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "Clang")

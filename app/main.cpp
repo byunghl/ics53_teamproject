@@ -3,6 +3,7 @@
 // Author: Byung Ho Lee
 
 #include "FileSystem53.hpp"
+#include "OFT.hpp"
 
 int main()
 {
@@ -26,9 +27,13 @@ int main()
     int x = fileSystem->create("ANT");
     int x2 = fileSystem->create("dope");
     int x3 = fileSystem->create("coffee");
-    int xx = fileSystem->create("UCI");
-    int x4 = fileSystem->create("di");
-    int x5 = fileSystem->deleteFile("ANT");
+    // int xx = fileSystem->create("UCI");
+    // int x4 = fileSystem->create("di");
+    // cout << "DELETE EXPECTED -1 : "<<  fileSystem->deleteFile("UCI") << endl;
+    // cout << "OPEN   EXPECTED -1 : " << fileSystem->open("ANT") << endl;
+    cout << endl;
+    cout << "----- D I R E C T O R Y INFO -----" << endl;
+    fileSystem->directory();
 
     cout << "\n\n\n ------ FROM MAIN -----\n";
     //cout << fileSystem->create("boo");

@@ -161,6 +161,30 @@ app/CreateCommand.cpp.s:
 	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.s
 .PHONY : app/CreateCommand.cpp.s
 
+app/FileInfo.o: app/FileInfo.cpp.o
+.PHONY : app/FileInfo.o
+
+# target to build an object file
+app/FileInfo.cpp.o:
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o
+.PHONY : app/FileInfo.cpp.o
+
+app/FileInfo.i: app/FileInfo.cpp.i
+.PHONY : app/FileInfo.i
+
+# target to preprocess a source file
+app/FileInfo.cpp.i:
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileInfo.cpp.i
+.PHONY : app/FileInfo.cpp.i
+
+app/FileInfo.s: app/FileInfo.cpp.s
+.PHONY : app/FileInfo.s
+
+# target to generate assembly for a file
+app/FileInfo.cpp.s:
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileInfo.cpp.s
+.PHONY : app/FileInfo.cpp.s
+
 app/FileSystem53.o: app/FileSystem53.cpp.o
 .PHONY : app/FileSystem53.o
 
@@ -184,6 +208,30 @@ app/FileSystem53.s: app/FileSystem53.cpp.s
 app/FileSystem53.cpp.s:
 	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileSystem53.cpp.s
 .PHONY : app/FileSystem53.cpp.s
+
+app/OFT.o: app/OFT.cpp.o
+.PHONY : app/OFT.o
+
+# target to build an object file
+app/OFT.cpp.o:
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/OFT.cpp.o
+.PHONY : app/OFT.cpp.o
+
+app/OFT.i: app/OFT.cpp.i
+.PHONY : app/OFT.i
+
+# target to preprocess a source file
+app/OFT.cpp.i:
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/OFT.cpp.i
+.PHONY : app/OFT.cpp.i
+
+app/OFT.s: app/OFT.cpp.s
+.PHONY : app/OFT.s
+
+# target to generate assembly for a file
+app/OFT.cpp.s:
+	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/OFT.cpp.s
+.PHONY : app/OFT.cpp.s
 
 app/main.o: app/main.cpp.o
 .PHONY : app/main.o
@@ -271,9 +319,15 @@ help:
 	@echo "... app/CreateCommand.o"
 	@echo "... app/CreateCommand.i"
 	@echo "... app/CreateCommand.s"
+	@echo "... app/FileInfo.o"
+	@echo "... app/FileInfo.i"
+	@echo "... app/FileInfo.s"
 	@echo "... app/FileSystem53.o"
 	@echo "... app/FileSystem53.i"
 	@echo "... app/FileSystem53.s"
+	@echo "... app/OFT.o"
+	@echo "... app/OFT.i"
+	@echo "... app/OFT.s"
 	@echo "... app/main.o"
 	@echo "... app/main.i"
 	@echo "... app/main.s"
