@@ -26,6 +26,9 @@ int main()
     int x = fileSystem->create("ANT");
     int x2 = fileSystem->create("dope");
     int x3 = fileSystem->create("coffee");
+    int xx = fileSystem->create("UCI");
+    int x4 = fileSystem->create("di");
+    int x5 = fileSystem->deleteFile("ANT");
 
     cout << "\n\n\n ------ FROM MAIN -----\n";
     //cout << fileSystem->create("boo");

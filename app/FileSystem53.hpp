@@ -257,7 +257,7 @@ class FileSystem53 {
 	// 		    3.4 If count > mem_area size, only size of mem_area should be read.
 	// 		    3.5 Returns actual number of bytes read from file.
 	// 		    3.6 Update current position so that next read() can be done from the first byte haven't-been-read.
- //    */
+ 	//    */
 	// int read(int index, char* mem_area, int count);
 
 
@@ -305,7 +305,7 @@ class FileSystem53 {
 	//  *    Return 0 with success
 	//  *    Return -1 with error (ie. No such file).
 	//  */
-	// int deleteFile(string fileName);
+	int deleteFile(string fileName);
 
 
 	// /* Directory listing function:

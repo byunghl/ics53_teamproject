@@ -195,6 +195,7 @@ void FileSystem53::write_descriptor(int no, char* desc) {
 
 	// 2. Mark bitmap 
 	pLdisk[0][no] = 1; // File Descriptor
+
 	//pLdisk[1][no] = 1; // Data Region
 	// 3. Write back to disk
 	int firstEmptyDataBlock = find_empty_data_block();
@@ -209,7 +210,7 @@ int FileSystem53::find_empty_descriptor(){
 	
 	int fileDescriptorNumber = 0;
 
-	for(int i = 1; i < MAX_FILE_NO+1; i++) {
+	for(int i = 4; i < B; i+=4) {
 		if(pDesc_table[0][i] == 0) 
 			return i;
 	}
@@ -232,13 +233,17 @@ int FileSystem53::find_empty_block() {
 
 int FileSystem53::create(string str) {
 
+	//write_descriptor(firstFreeDescriptor);
+	// 1: creates empty file with file size zero
+	// 2: makes/allocates descriptor
+	// 3: updates directory file*/
+
 	int firstFreeDescriptorIndex = -1;
 	int firstEmptyDataBlock = -1;
 	int initialFileSize = 0;
 	int currentRootDirectoryBlockNumber = K;
 	int lastOccupiedPlace = -1;
 	
-
 	char* pDirectory = pDesc_table[2]+0; // root data bitmap pointer
 	char* pBuffer = new char[64];
 	
@@ -249,21 +254,26 @@ int FileSystem53::create(string str) {
 		return -1; // FILE NAME CANNOT BE BIGGER THAN MAX FILE LENGTH
 	}else {
 		// Duplication Check
-		if(pDesc_table[2][0] > 0) {
-		
-			for(int i = 1 ; i < DESCR_SIZE;i++) {
-				cout << "\n\n[2" << "," << i << "]\n"; 
-				cout << "str:" << str << endl;
-				read_block(pDesc_table[2][i], pBuffer);			
-				string tempStr = string(pBuffer);
-				int endOfFileName = tempStr.find("\3");
-				string substring = tempStr.substr(0, endOfFileName);
-				if(str.compare(substring) == 0) {
-					cout << "DULPLICATION TERMINTATE\n";
-					return -2;
-				}
+		if(pDesc_table[0][1] == 1) {
+			
+			read_block(K, pBuffer);			
+			string tempStr = string(pBuffer);
+			int endOfFileName = tempStr.find(str.append("\0"));
+			string keyword = str.append("\3");
+			int targetLocation = tempStr.find(keyword);
+			//cout << "Target Location : " << targetLocation << endl;
+			string substring = tempStr.substr(0, endOfFileName);
 
-			}		 
+			// cout << "tempStr: " << tempStr << endl;
+			// cout << "keyword: " << keyword << endl;
+			// cout << "substring: " << substring << endl;
+
+			if(str.compare(substring) == 0 || targetLocation > -1) {
+				// cout << "DULPLICATION TERMINTATE\n";
+				return -2;
+			}	 
+		} else {
+			cout << "STARTED WITH EMPTY BLOCK" << endl;
 		}
 	}
 
@@ -284,7 +294,7 @@ int FileSystem53::create(string str) {
 	int firstEmptyIndex = -1;
 	for(int index = 0; index < B; index++) {
 		if(pLdisk[currentRootDirectoryBlockNumber][index] == 0) {
-			//cout << "EMPTY INDEX\n";
+			// cout << "\n\nEMPTY INDEX : " << index << endl;
 			firstEmptyIndex = index;
 			break;
 		}
@@ -301,148 +311,73 @@ int FileSystem53::create(string str) {
 			}
 		}
 	}
-
-	for(int i = firstEmptyIndex; i < (firstEmptyIndex + str.length());i++) {
+	if(firstEmptyIndex == 0) {
+		for(int i = firstEmptyIndex; i < (firstEmptyIndex + str.length());i++) {
 				
-		pLdisk[currentRootDirectoryBlockNumber][i] = pFileName[i-firstEmptyIndex];
+			pLdisk[currentRootDirectoryBlockNumber][i] = pFileName[i-firstEmptyIndex];
 
-		cout << "pFileName:" << pFileName[i-firstEmptyIndex] << endl;
-		
-		// At the last, 
-		if(i+1 == firstEmptyIndex + str.length()) {
-			pLdisk[K][i+1] = 3;
-			pLdisk[K][i+2] = firstFreeDescriptorIndex;
-			pLdisk[K][i+3] = 10;
-			number_of_files_in_ldisk+=1;
-			pDesc_table[2][0] = number_of_files_in_ldisk;			
-		}
+			//cout << "pFileName:" << pFileName[i-firstEmptyIndex] << endl;
+			
+			// At the last, 
+			if(i+1 == firstEmptyIndex + str.length()) {
+				pLdisk[K][i+1] = 3;
+				pLdisk[K][i+2] = firstFreeDescriptorIndex;
+				pLdisk[K][i+3] = 10;
+				number_of_files_in_ldisk+=1;
+				pDesc_table[2][0] = number_of_files_in_ldisk;			
+			}
 
-		if(str.length()-1 == i)
-			break;
-	}
-
-
-
-
-	// GOOD : cout << "EMPTY DESCRI: " << firstFreeDescriptorIndex;
-
-/*
-	// Check Duplication
-	
-	for(int fileDescritorIndex =2; fileDescritorIndex < K; fileDescritorIndex++) {
-	
-		// Check every single descriptor
-		for(int index = 4; index < B; index+=DESCR_SIZE) {
-			// CHECK A FILE if file exist
-			if(pDirectory[index] != 0) {
-				cout << "Current Descriptor Index : " << index/DESCR_SIZE << " is not empty.\n";
-				cout << "So Check whats going on.\n\n";
-
-				for(int i = index+1; i < (index+DESCR_SIZE); i++) {
-
-					//cout << "##### i : " << i << endl;
-
-					// if array[i] is not empty
-					if(pDirectory[i] != 0) {
-						read_block(pDirectory[i], pBuffer);
-						string tempStr = string(pBuffer);
-						int endOfFileName = tempStr.find("\3");
-
-						cout << "tempStr: " << tempStr << endl;
-						cout << "str: " << str << endl;
-						
-						string substring = tempStr.substr(0, endOfFileName);
-						cout << "substring :" << substring << endl;
-						// find index of end of filename
-						
-						cout << "RESULT OF COMPARE ABOVE TWO STRINGS: " << str.compare(substring) << endl << endl;
-						if(str.compare(substring) ==0) {
-							// Same file name exist (DUPLICATION!)
-							cout << "DULPLICATION TERMINTATE\n";
-							return -2;
-						} 
-
-					} else { // if pDirectoy[i] == 0 
-						cout << "current DESCRIPTOR : " << index/DESCR_SIZE << " and current LOCATION : " << i << " is empty.\n";
-						index += 1;
-					}
-				}	
-			} else {
-				// STATUS: Descritor is EMPTY
-
-				// Free file descriptor is founded.
-				firstFreeDescriptorIndex = index/DESCR_SIZE;
-				cout << "EMPTY Current Descriptor Index : " << index/DESCR_SIZE << " is empty.\n";
+			if(str.length()-1 == i)
 				break;
 			}
-		}
-	}
-	cout << "INDEX OF FIRST EMPTY DESCRIPTOR: " << firstFreeDescriptorIndex << endl;
-	
-	const char* pFileName = str.c_str();	
-	
-	int currentRootDirectoryBlockNumber = 7;
-	int firstEmptyIndex = -1;
-
-	// Write in directory
-	// STEP1 : FIND EMPTY INDEX in BLOCK
-	for(int index = 0; index < B; index++) {
-		if(pLdisk[currentRootDirectoryBlockNumber][index] == 0) {
-			//cout << "EMPTY INDEX\n";
-			firstEmptyIndex = index;
-			break;
-		}
-		if( (index==63 && (pLdisk[currentRootDirectoryBlockNumber][index]!= 0)) && (currentRootDirectoryBlockNumber < 64) ) {
-			//currentRootDirectoryBlockNumber +=1;
-			// check second block of root directoy exist or not
-			if(currentRootDirectoryBlockNumber == 7 && pDesc_table[2][2] != 0) {
-				currentRootDirectoryBlockNumber = pDesc_table[2][2];
-			} else if(pDesc_table[2][3] != 0){
-				currentRootDirectoryBlockNumber = pDesc_table[2][3];
-			} else {
-				// THERE IS NO EMPTY SPOT! I HAVNE"T THINK ABOUT THIS CASE
-				cout << "CHECK POINT!!" << endl; 
+	} else {
+		// cout << "HERE! : " << firstEmptyIndex << endl;
+		
+		for(int i = firstEmptyIndex; i < (firstEmptyIndex + str.length()-1); i++)  {
+			pLdisk[currentRootDirectoryBlockNumber][i] = pFileName[i-firstEmptyIndex];
+			//cout << "pFileName:" << pFileName[i-firstEmptyIndex] << endl;
+			if(i+1 == firstEmptyIndex + str.length()-1) {
+				pLdisk[K][i+1] = 3;
+				pLdisk[K][i+2] = firstFreeDescriptorIndex;
+				pLdisk[K][i+3] = 3;
+				number_of_files_in_ldisk+=1;
+				pDesc_table[2][0] = number_of_files_in_ldisk;		
 			}
 		}
 	}
-
-	for(int i = firstEmptyIndex; i < (firstEmptyIndex + str.length());i++) {
-				
-		pLdisk[K][i] = pFileName[i-firstEmptyIndex];
-
-		cout << "pFileName:" << pFileName[i-firstEmptyIndex] << endl;
-		
-		// At the last, 
-		if(i+1 == firstEmptyIndex + str.length()) {
-			pLdisk[K][i+1] = 3;
-			pLdisk[K][i+2] = firstFreeDescriptorIndex;
-			pLdisk[K][i+3] = 10;
-			number_of_files_in_ldisk+=1;
-			pDesc_table[2][0] = number_of_files_in_ldisk;
-
-			// NOT SURE BUT JUST KEEP GOING
-			char* tempDesc = new char[4];
-			tempDesc[0] = initialFileSize;
-			tempDesc[1] = firstFreeDescriptorIndex; 
-			tempDesc[2] = 0;
-			tempDesc[2] = 0;
-			write_descriptor(firstFreeDescriptorIndex, tempDesc);
-
-		}
-
-		if(str.length()-1 == i)
-			break;
-	}
-
-	
-	//write_descriptor(firstFreeDescriptor);
-	// 1: creates empty file with file size zero
-	// 2: makes/allocates descriptor
-	// 3: updates directory file*/
 
 	return 0;
 }
 
+int FileSystem53::deleteFile(string fileName) {
+
+	if(pDesc_table[0][1] == 1) {
+		char* pBuffer = new char[64];
+		read_block(K, pBuffer);		
+
+		string tempBuffer = string(pBuffer);
+		int endOfFileName = tempBuffer.find(fileName.append("\0"));
+		string keyword = fileName.append("\3");
+
+		int targetLocation = tempBuffer.find(keyword);
+		cout << "Target Location : " << targetLocation << endl;
+		
+		string substring = tempBuffer.substr(0, endOfFileName);
+	} else {
+		// NO FILE IN ROOT.
+		return -1; 
+	}
+
+}
+
+// int FileSystem53::open_desc(int desc_no) {
+
+// }
+
+// int FileSystem53::write(int index, char value, int count) {
+
+
+// }
 
 void FileSystem53::read_block(int i, char* p) {
 	
@@ -508,7 +443,6 @@ void FileSystem53::restore() {
 		cout << "Unable to open a file.\n";
 	}
 
- 
 	cout << endl;
 
 }
