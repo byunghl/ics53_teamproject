@@ -21,13 +21,19 @@ int main()
 
     ///// ROOT DIRECTORY
 
+
     fileSystem->format();
-    cout << fileSystem->create("foo");
-    cout << fileSystem->create("boo");
+    int x = fileSystem->create("ANT");
+    int x2 = fileSystem->create("dope");
+    int x3 = fileSystem->create("coffee");
+
+    cout << "\n\n\n ------ FROM MAIN -----\n";
+    //cout << fileSystem->create("boo");
     //cout << " find empty descriptor : " << fileSystem->find_empty_descriptor();
-    cout << "Directory pointer : " << *fileSystem->read_descriptor(0) << endl;
+    //cout << "\nDirectory pointer : " << *fileSystem->read_descriptor(0) << endl;
     //fileSystem->versionInfo();
 
+    fileSystem->checkFileNumber();
     fileSystem->save();
 
     //cout << fileSystem->create("hi");

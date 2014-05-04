@@ -340,6 +340,8 @@ class FileSystem53 {
 	// Personal functions
 	int find_empty_data_block();
 
+	void checkFileNumber();
+
 	// NEED TO WORK void markBitmap(int no, bool bit);
 	void versionInfo(); // PERSONAL FUNCTION
 
