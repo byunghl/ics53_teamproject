@@ -19,7 +19,7 @@ FileSystem53::FileSystem53(int l, int b, string storage)
 	// Initialize 2d array dynamically
 	for(int i = 0; i < L; i++) {
 		pLdisk[i] = new char[L];
-		cout << endl;
+		
 	}
 
 	for(int i = 0; i < L; i++) {
@@ -30,8 +30,36 @@ FileSystem53::FileSystem53(int l, int b, string storage)
 		}
 	}
 
+
+
 	pDesc_table = &pLdisk[0];
 
+}
+
+void FileSystem53::OpenFileTable(){
+
+	oft = new class OpenFileTable[L];
+	
+	
+
+}
+
+int FileSystem53::find_oft() {
+	for(int i = 0; i < L; i++) {
+		if(oft[i].file_descriptor_index == -1)
+			return i;
+	}
+
+	return -1;
+}
+
+void FileSystem53::deallocate_oft(int index) {
+	for(int i = 0; i < L; i++) {
+		oft[index].p_rw_buffer[i] = 0;	
+	}
+	oft[index].cp = 0;
+	oft[index].file_descriptor_index = -1;
+	
 }
 
 void FileSystem53::format() {
@@ -133,8 +161,8 @@ char* FileSystem53::read_descriptor(int no) {
 	unsigned int blockNumber = (no  / 16) + 2;
 	unsigned int locationOnBlock = (no * DESCR_SIZE) % 64;
 
-	cout << "\nRowNumber : " << blockNumber << endl;
-	cout << "ColumnNumber : " << locationOnBlock << endl;
+//	cout << "\nRowNumber : " << blockNumber << endl;
+//	cout << "ColumnNumber : " << locationOnBlock << endl;
 	
 	return pDesc_table[blockNumber]+locationOnBlock;
 }
@@ -149,14 +177,14 @@ void FileSystem53::clear_descriptor(int no) {
 
 		// Clear data region if it is not empty
 		if(pDesc_table[blockNumber][locationOnBlock+i] != 0)
-			empty_data_block(pDesc_table[blockNumber][locationOnBlock+i]);
+			empty_data_block(pDesc_table[blockNumber][locationOnBlock+i]); // 3.Write back to disk
 		pDesc_table[blockNumber][locationOnBlock+i] = 0;
 	}	
 	
 	// 2. Clear bitmap
 	pDesc_table[0][no] = 0; // File Descriptor
 	pDesc_table[1][no] = 0; // Data Region
-	// 3.Write back to disk
+	
 
 }
 
@@ -179,7 +207,7 @@ void FileSystem53::write_descriptor(int no, char* desc) {
 
 	//pLdisk[1][no] = 1; // Data Region
 	// 3. Write back to disk
-	int firstEmptyDataBlock = find_empty_data_block();
+	//int firstEmptyDataBlock = find_empty_data_block();
 	// while(desc[i] != 3) {
 	// 	pLdisk[]
 	// }
@@ -331,10 +359,44 @@ int FileSystem53::create(string str) {
 	return 0;
 }
 
+int FileSystem53::open_desc(int desc_no) {
+
+	char* pBuffer = new char[64];
+	string targetFileName = "";
+	bool found = false;
+
+	if(pDesc_table[0][desc_no] == 0) {
+		delete pBuffer;
+		return -1;
+	}
+	else {
+		read_block(K, pBuffer);
+		string bufferToString = string(pBuffer);
+		string* tempFileList = fileNameParser(bufferToString);
+		int* tempDescriptorIndex = fileDescriptorIndexParser(bufferToString, pBuffer);
+
+		for(int i = 0; i < number_of_files_in_ldisk; i++) {
+			if(tempDescriptorIndex[i] == desc_no) {
+				found = true;
+				targetFileName = tempFileList[i];
+			}
+		}
+
+		if(found) 
+			return open(targetFileName);
+		else
+			return -1;
+		
+	}
+
+	return -1;
+	
+}
+
 int FileSystem53::open(string symbolic_file_name) {
 	// 1. check file is in directory or not
 	// Duplication Check
-	int entryNumber = -1;
+	int oftIndex = -1;
 
 	if(pDesc_table[0][1] == 1) {
 		char* pBuffer = new char[64];
@@ -351,52 +413,24 @@ int FileSystem53::open(string symbolic_file_name) {
 			return -1;
 		}
 
-		//cout << "Target Location : " << targetLocation << endl;
+		cout << "Target Location : " << targetLocation << endl;
 
 		int tempTargetDescriptorIndex = targetLocation + symbolic_file_name.length()+1;
 		
-		bool checkAllOccupied = true;
-		
-		for(int index = 4; index < B; index+=4) {
-			if(oft[index].file_descriptor_index == -1) {
-				checkAllOccupied = false;
-				entryNumber = index;
-				break;
-			}
-		}
-
-		char* descriptor = read_descriptor(tempTargetDescriptorIndex);
-		int indexOfFirstData = descriptor[1]  ;
-		
-
-		if(checkAllOccupied)
-			return -2;
-		
+		int oftIndex = find_oft();
+		oft[oftIndex].cp = 0;
+		oft[oftIndex].file_descriptor_index = tempTargetDescriptorIndex;
+		char* tempDescriptorBuffer = read_descriptor(tempTargetDescriptorIndex);
+		read_block(tempDescriptorBuffer[1], pBuffer);
 		for(int i = 0; i < 64; i++) {
-			oft[entryNumber].p_rw_buffer[i] = pLdisk[indexOfFirstData][i];
+			oft[oftIndex].p_rw_buffer[i] = pBuffer[i];
 		}
-		// oft[tempTargetDescriptorIndex].cp = 0;
-		// oft[tempTargetDescriptorIndex].file_descriptor_index = tempTargetDescriptorIndex;
-
-		// string temp = tempBuffer.erase(targetLocation, symbolic_file_name.length()+2);
-		
-
-		
-		//string temp = tempBuffer.substr(targetLocation, fileName.length() + 2);
-
-		
-
-		// read_block(K, pBuffer);	
-
-		// cout << "TEMPBUFFER :" << tempBuffer << endl;
-		//string substring = tempBuffer.substr(0, endOfFileName);
-		
-
+	
 	} else {
 		// NO FILE IN ROOT.
 		return -1; 
 	}
-	return entryNumber;
+	return 0;
 }
 
 int FileSystem53::write(int index, char value, int count) {
@@ -483,10 +517,11 @@ void FileSystem53::directory() {
 
 		for(int i = 0 ; i < number_of_files_in_ldisk; i++) {
 			//printf("%s %d", fileNameList[i], fileSizeList[i]);
-			cout << fileNameList[i] << " " << fileSizeList[i] << endl ;
+			cout << fileNameList[i] << " " << fileSizeList[i] << " bytes" << endl ;
 		}
 	}
 }
+
 int* FileSystem53::fileSizeParser(string str, char* buffer) {
 	int* pFileSizeList = new int[number_of_files_in_ldisk];
 	int startPosition = 0;
@@ -502,7 +537,6 @@ int* FileSystem53::fileSizeParser(string str, char* buffer) {
 		if((currentPosition !=-1) && i==0 ) {
 			tempFileName = str.substr(startPosition, currentPosition);
 			tempTargetDescriptorIndex = (int)buffer[currentPosition-1];
-			cout << "TARGET:" << tempTargetDescriptorIndex << endl;
 			char* descriptor = read_descriptor(tempTargetDescriptorIndex);
 			pFileSizeList[i] = descriptor[0];
 			previousPosition = currentPosition;
@@ -511,7 +545,6 @@ int* FileSystem53::fileSizeParser(string str, char* buffer) {
 		} else {
 			tempFileName = str.substr(startPosition, (currentPosition-previousPosition));
 			tempTargetDescriptorIndex = (int)buffer[currentPosition-1];
-			cout << "TARGET:" << tempTargetDescriptorIndex << endl;
 			char* descriptor = read_descriptor(tempTargetDescriptorIndex);
 			pFileSizeList[i] = descriptor[0];
 			previousPosition = currentPosition;
@@ -519,11 +552,6 @@ int* FileSystem53::fileSizeParser(string str, char* buffer) {
 		}
 	
 	}
-	// for(int i = 0; i < number_of_files_in_ldisk ; i ++ ) {
-
-	// 	cout << "$$$" << pFileSizeList[i] << "$$$\n";
-	// }
-
 	return pFileSizeList;
 }
 
@@ -645,7 +673,6 @@ int FileSystem53::find_empty_data_block() {
 void FileSystem53::empty_data_block(int index) {
 	for(int i = index; i < B; i++) {
 		pLdisk[index][i] = 0;
-
 	}
 }
 
@@ -653,6 +680,38 @@ void FileSystem53::checkFileNumber() {
 	cout << "Number of Files in lDisk: " << number_of_files_in_ldisk << endl;
 }
 
+int* FileSystem53::fileDescriptorIndexParser(string str, char* buffer) {
+	int* pFileSizeList = new int[number_of_files_in_ldisk];
+	int startPosition = 0;
+	int currentPosition = -1;
+	int previousPosition = -1;
+	string tempFileName = "";
+	int tempTargetDescriptorIndex = -1;
+
+	for(int i = 0; i < number_of_files_in_ldisk; i++ ) {
+		
+		currentPosition = str.find("\4", startPosition);
+		
+		if((currentPosition !=-1) && i==0 ) {
+			tempFileName = str.substr(startPosition, currentPosition);
+			tempTargetDescriptorIndex = (int)buffer[currentPosition-1];
+			pFileSizeList[i] = tempTargetDescriptorIndex;
+			previousPosition = currentPosition;
+			startPosition = currentPosition+1;
+				
+		} else {
+			tempFileName = str.substr(startPosition, (currentPosition-previousPosition));
+			tempTargetDescriptorIndex = (int)buffer[currentPosition-1];
+			pFileSizeList[i] = tempTargetDescriptorIndex;
+			previousPosition = currentPosition;
+			startPosition = currentPosition+1;
+		}
+	
+	}
+	
+
+	return pFileSizeList;
+}
 
 
 void FileSystem53::versionInfo() {

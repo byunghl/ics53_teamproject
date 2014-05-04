@@ -26,7 +26,7 @@ class FileSystem53 {
 	int number_of_files_in_ldisk;
 	int cp;
 
-	OpenFileTable oft[64];
+	OpenFileTable* oft;
 
 	char** pLdisk;
 	char** pDesc_table;  // Descriptor Table (in memory).
@@ -61,13 +61,13 @@ class FileSystem53 {
 	FileSystem53(int l, int b, string storage);
 
 	// // Open File Table(OFT).
-	// void OpenFileTable();
+	void OpenFileTable();
 
 	// // Allocate open file table
-	// int find_oft();
+	int find_oft();
 
 	// //Deallocate
-	// void deallocate_oft(int index);
+	void deallocate_oft(int index);
 
 	/* Format file system.
 	 *   1. Initialize the first K blocks with zeros.
@@ -213,7 +213,7 @@ class FileSystem53 {
 	//  *    index: index if open file table if successfully allocated.
 	//  *    Return -1 for error.
 	//  */
-	// int open_desc(int desc_no);
+	int open_desc(int desc_no);
 
 
 	// /* Open file with file name function:
@@ -351,6 +351,8 @@ class FileSystem53 {
 	string* fileNameParser(string str);
 
 	int* fileSizeParser(string str, char* buffer);
+
+	int* fileDescriptorIndexParser(string str, char* buffer);
 
 	// NEED TO WORK void markBitmap(int no, bool bit);
 	void versionInfo(); // PERSONAL FUNCTION

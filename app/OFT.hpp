@@ -7,9 +7,10 @@ private:
 
 public:
 	char p_rw_buffer[64];
-	int cp = 0;
-	int file_descriptor_index =-1;
+	int cp;
+	int file_descriptor_index;
 
+	OpenFileTable();
 
 };
 

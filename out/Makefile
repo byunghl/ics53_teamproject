@@ -161,30 +161,6 @@ app/CreateCommand.cpp.s:
 	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/CreateCommand.cpp.s
 .PHONY : app/CreateCommand.cpp.s
 
-app/FileInfo.o: app/FileInfo.cpp.o
-.PHONY : app/FileInfo.o
-
-# target to build an object file
-app/FileInfo.cpp.o:
-	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileInfo.cpp.o
-.PHONY : app/FileInfo.cpp.o
-
-app/FileInfo.i: app/FileInfo.cpp.i
-.PHONY : app/FileInfo.i
-
-# target to preprocess a source file
-app/FileInfo.cpp.i:
-	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileInfo.cpp.i
-.PHONY : app/FileInfo.cpp.i
-
-app/FileInfo.s: app/FileInfo.cpp.s
-.PHONY : app/FileInfo.s
-
-# target to generate assembly for a file
-app/FileInfo.cpp.s:
-	$(MAKE) -f CMakeFiles/a.out.app.dir/build.make CMakeFiles/a.out.app.dir/app/FileInfo.cpp.s
-.PHONY : app/FileInfo.cpp.s
-
 app/FileSystem53.o: app/FileSystem53.cpp.o
 .PHONY : app/FileSystem53.o
 
@@ -319,9 +295,6 @@ help:
 	@echo "... app/CreateCommand.o"
 	@echo "... app/CreateCommand.i"
 	@echo "... app/CreateCommand.s"
-	@echo "... app/FileInfo.o"
-	@echo "... app/FileInfo.i"
-	@echo "... app/FileInfo.s"
 	@echo "... app/FileSystem53.o"
 	@echo "... app/FileSystem53.i"
 	@echo "... app/FileSystem53.s"
